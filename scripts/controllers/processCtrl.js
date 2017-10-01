@@ -1,0 +1,120 @@
+angular.module("project").controller("processCtrl", ["$scope", "$http", 'restService', 'postService', 'spinnerService', '$sce', function ($scope, $http, restService, postService, spinnerService, $sce) {
+
+    //--------MATERIALIZE--------//
+    $('.modal').modal();
+    $('select').material_select();
+
+    //Get data from service
+    $scope.data = postService.data;
+    $scope.s1 = postService.data.s1;
+    $scope.s2 = postService.data.s2;
+
+    //Create a network
+    $scope.nodeId = 1; //Node id
+    $scope.nodes = new vis.DataSet([]); //Create an array with nodes
+    $scope.edges = new vis.DataSet([]);  // create an array with edges
+    $scope.selectedNode = 0;   //Id of the node clicked
+
+    var container = document.getElementById('mynetwork');
+    var data = {
+        nodes: $scope.nodes,
+        edges: $scope.edges
+    };
+    var options = {
+        layout: {
+            hierarchical: {
+                direction: "UD"
+            }
+        }
+    };
+    $scope.network = new vis.Network(container, data, options);
+
+    //Populate nodes with sentence terms
+    for (var i = 0; i < $scope.data.s1.terms.length; i++) {
+
+        console.log($scope.data.s1.terms[i].pos);
+
+        $scope.nodes.add({
+            'id': $scope.data.s1.terms[i].string + 's1',
+            'label': $scope.data.s1.terms[i].string,
+            'item': $scope.data.s1.terms[i],
+            'level': 0,
+            'color': '#B2B2B2'
+        });
+
+        if ($scope.data.s1.terms[i].pos != null) {
+            $scope.nodes.update({
+                id: $scope.data.s1.terms[i].string + 's1',
+                color : '#1E8EF6'
+            });
+        }
+
+    }
+    for (var i = 0; i < $scope.data.s2.terms.length; i++) {
+
+        $scope.nodes.add({
+            'id': $scope.data.s2.terms[i].string + 's2',
+            'label': $scope.data.s2.terms[i].string,
+            'item': $scope.data.s2.terms[i],
+            'level': 1,
+            'color': '#B2B2B2'
+        });
+
+        if ($scope.data.s2.terms[i].pos != null) {
+            $scope.nodes.update({
+                id: $scope.data.s2.terms[i].string + 's2',
+                color : '#1E8EF6'
+            });
+        }
+    }
+
+
+    //Create relations
+    for (var i = 0; i < $scope.data.relationsArrayList.length; i++) {
+        $scope.edges.add({
+            from: $scope.data.relationsArrayList[i].t1.string + 's1',
+            to: $scope.data.relationsArrayList[i].t2.string + 's2',
+            relation: $scope.data.relationsArrayList[i]
+        });
+    }
+
+    //On node click
+    $scope.network.on('click', function (properties) {
+        //Click on edge
+        if (properties.nodes.length == 0) {
+            var ids = properties.edges;
+            $scope.relation = $scope.edges.get(ids[0]).relation;
+            $scope.node1 = $scope.edges.get(ids[0]).relation.t1;
+            $scope.node2 = $scope.edges.get(ids[0]).relation.t2;
+            $scope.$digest();
+            console.log($scope.relation);
+            console.log($scope.node1);
+            console.log($scope.node2);
+            $('#viewRelation').modal('open');
+
+        } else {
+            console.log(properties);
+            var ids = properties.nodes;
+            $scope.selectedNode = ids[0];
+            console.log($scope.nodes.get($scope.selectedNode));
+
+            $scope.link = $sce.trustAsResourceUrl("http://babelnet.org/synset?word=" + $scope.nodes.get($scope.selectedNode).item.bfy.babelSynsetID + "&lang=EN");
+
+            restService.getSynsetWithID($scope.nodes.get($scope.selectedNode).item.bfy.babelSynsetID)
+                .then(function success(response) {
+                    $scope.synset = response.data;
+
+                }, function error(response) {
+                    swal('Dang!', 'An error ocurred :(', 'error');
+                });
+
+            $('#editModal').modal('open');
+        }
+    });
+
+
+}]);
+
+
+
+

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="project" ng-controller="indexCtrl" lang="en">
+<head>
+
+    <base href="">
+    <meta charset="UTF-8">
+    <title>SenSiMet</title>
+
+    <!--Compiled and minified AngularJS-->
+    <script src="vendor/angular.min.js"></script>
+    <script src="vendor/ng-file-upload.min.js"></script>
+    <script src="vendor/angular-route.js"></script>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--App-->
+    <script src="scripts/app.js"></script>
+
+    <!--Controllers-->
+    <script src="scripts/controllers/indexCtrl.js"></script>
+    <script src="scripts/controllers/uploadCtrl.js"></script>
+    <script src="scripts/controllers/processCtrl.js"></script>
+    <script src="scripts/controllers/navbarCtrl.js"></script>
+
+    <!--Services-->
+    <script src="scripts/services/postService.js"></script>
+    <script src="scripts/services/restService.js"></script>
+
+    <!--Directives-->
+    <script src="scripts/directives/fileModel.js"></script>
+
+    <!--Visjs-->
+    <script src="node_modules/vis/dist/vis.min.js"></script>
+    <link href="node_modules/vis/dist/vis.min.css" rel="stylesheet">
+
+    <!--Materialize-->
+    <script src="vendor/jquery.js"></script>
+    <script src="vendor/materialize.js"></script>
+
+    <!--Styles-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="styles/materialize.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <link rel="stylesheet" href="styles/spinner.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!--Sweet alerts-->
+    <script src="node_modules/sweetalert2/dist/sweetalert2.js"></script>
+    <link rel="stylesheet" href="node_modules/sweetalert2/dist/sweetalert2.css">
+
+    <!--Angular Spinners-->
+    <script src="node_modules/angular-spinners/dist/angular-spinners.js"></script>
+
+
+
+</head>
+<body>
+
+<div ng-view="app">
+
+</div>
+
+</body>
+</html>

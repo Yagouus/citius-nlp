@@ -1,0 +1,109 @@
+<!--Include navbar-->
+<div ng-include="'views/navbar.html'"></div>
+
+<!--Tree-->
+<div class="container">
+
+    <!--General Info-->
+    <div class="row">
+        <div class="col s12 ">
+            <div class="card hoverable ">
+                <div class="card-content">
+
+                    <!--Title-->
+                    <span class="card-title">Result</span>
+
+                    <!--S1-->
+                    <div class="row">
+                        <div class="col s12">
+                            <b>Sentence 1: </b> {{s1.string}}
+                        </div>
+                    </div>
+
+                    <!--S2-->
+                    <div class="row">
+                        <div class="col s12">
+                            <b>Sentence 2: </b> {{s2.string}}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <!--Net-->
+        <div class="row">
+            <div class="col s12 ">
+                <div class="card hoverable ">
+                    <div class="card-content">
+
+                        <!--Title-->
+                        <span class="card-title">Relations graph</span>
+
+                        <!--Graph-->
+                        <div id="mynetwork"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Edit node modal-->
+<div id="editModal" class="modal resultModal">
+    <iframe frameborder="0" src={{link}} class="cont">
+    </iframe>
+</div>
+
+<!--Edit node modal-->
+<div id="viewRelation" class="modal">
+
+    <div class="modal-content">
+
+        <!--Titulo-->
+        <h4>Relation</h4>
+
+        <!--Term 1-->
+        <div class="row">
+            <div class="col s12">
+                <h5>Term 1</h5>
+                <blockquote>
+                    <p><b>Term: </b> {{node1.string}}</p>
+                    <p><b>POS: </b>{{node1.pos}}</p>
+                    <p><b>Sense: </b>{{node1.sense}}</p>
+                    <p><b>Meaning: </b>{{node1.gloss}}</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!--Term 2-->
+        <div class="row">
+            <div class="col s12">
+                <h5>Term 2</h5>
+                <blockquote>
+                    <p><b>Term: </b> {{node2.string}}</p>
+                    <p><b>POS: </b>{{node2.pos}}</p>
+                    <p><b>Sense: </b>{{node2.sense}}</p>
+                    <p><b>Meaning: </b>{{node2.gloss}}</p>
+                </blockquote>
+            </div>
+        </div>
+
+        <!--Term 2-->
+        <div class="row">
+            <div class="col s12">
+                <div class="divider"></div>
+                <p><b>Dice: </b>{{relation.metric}}</p>
+                <p><b>Path length: </b>{{relation.path}}</p>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>
